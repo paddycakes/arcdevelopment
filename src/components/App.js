@@ -3,6 +3,7 @@ import { ThemeProvider } from '@material-ui/styles';
 
 import theme from './ui/Theme';
 import Header from './ui/Header';
+import Footer from './ui/Footer';
 
 function App() {
   return (
@@ -10,7 +11,10 @@ function App() {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path="/" element={<div>Home</div>} />
+          <Route
+            path="/"
+            element={<div style={{ height: '2000px' }}>Home</div>}
+          />
           <Route path="/services" element={<div>Services</div>} />
           <Route path="/customsoftware" element={<div>Custom Software</div>} />
           <Route path="/mobileapps" element={<div>Mobile Apps</div>} />
@@ -20,6 +24,7 @@ function App() {
           <Route path="/contact" element={<div>Contact Us</div>} />
           <Route path="/estimate" element={<div>Free Estimate</div>} />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </ThemeProvider>
   );

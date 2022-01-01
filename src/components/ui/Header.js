@@ -115,7 +115,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Header() {
+export default function Header(props) {
   const classes = useStyles();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down('md'));
@@ -126,10 +126,8 @@ export default function Header() {
   <SwipeableDrawer disableBackdropTransition={!iOS} disableDiscovery={iOS} />;
 
   const [openDrawer, setOpenDrawer] = React.useState(false);
-  const [value, setValue] = React.useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openMenu, setOpenMenu] = React.useState(false);
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   const menuOptions = [
     { name: 'Services', link: '/services', activeIndex: 1, selectedIndex: 0 },
@@ -172,10 +170,13 @@ export default function Header() {
     [...menuOptions, ...routes].forEach((route) => {
       switch (window.location.pathname) {
         case `${route.link}`:
-          if (value !== route.activeIndex) {
-            setValue(route.activeIndex);
-            if (route.selectedIndex && route.selectedIndex !== selectedIndex) {
-              setSelectedIndex(route.selectedIndex);
+          if (props.value !== route.activeIndex) {
+            props.setValue(route.activeIndex);
+            if (
+              route.selectedIndex &&
+              route.selectedIndex !== props.selectedIndex
+            ) {
+              props.setSelectedIndex(route.selectedIndex);
             }
           }
           break;
@@ -186,10 +187,10 @@ export default function Header() {
           break;
       }
     });
-  }, [value, menuOptions, routes, selectedIndex]);
+  }, [props, props.value, menuOptions, routes, props.selectedIndex]);
 
   const handleChange = (e, newValue) => {
-    setValue(newValue);
+    props.setValue(newValue);
   };
 
   const handleClick = (e) => {
@@ -205,13 +206,13 @@ export default function Header() {
   const handleMenuItemClick = (e, index) => {
     setAnchorEl(null);
     setOpenMenu(false);
-    setSelectedIndex(index);
+    props.setSelectedIndex(index);
   };
 
   const tabs = (
     <>
       <Tabs
-        value={value}
+        value={props.value}
         className={classes.tabContainer}
         onChange={handleChange}
         indicatorColor="primary"
@@ -248,12 +249,12 @@ export default function Header() {
             key={`${option}${i}`}
             onClick={(e) => {
               handleMenuItemClick(e, i);
-              setValue(1);
+              props.setValue(1);
             }}
             component={Link}
             to={option.link}
             classes={{ root: classes.menuItem }}
-            selected={selectedIndex === i && value === 1}
+            selected={props.selectedIndex === i && props.value === 1}
           >
             {option.name}
           </MenuItem>
@@ -281,11 +282,11 @@ export default function Header() {
               button
               component={Link}
               to={route.link}
-              selected={value === route.activeIndex}
+              selected={props.value === route.activeIndex}
               classes={{ selected: classes.drawerItemSelected }}
               onClick={() => {
                 setOpenDrawer(false);
-                setValue(route.activeIndex);
+                props.setValue(route.activeIndex);
               }}
             >
               <ListItemText className={classes.drawerItem} disableTypography>
@@ -296,7 +297,7 @@ export default function Header() {
           <ListItem
             onClick={() => {
               setOpenDrawer(false);
-              setValue(5);
+              props.setValue(5);
             }}
             divider
             button
@@ -306,7 +307,7 @@ export default function Header() {
               selected: classes.drawerItemSelected,
             }}
             to="/estimate"
-            selected={value === 5}
+            selected={props.value === 5}
           >
             <ListItemText className={classes.drawerItem} disableTypography>
               Free Estimate
@@ -334,7 +335,7 @@ export default function Header() {
               to="/"
               disableRipple
               className={classes.logoContainer}
-              onClick={() => setValue(0)}
+              onClick={() => props.ElevationScrollsetValue(0)}
             >
               <svg
                 className={classes.logo}

@@ -5,6 +5,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import theme from './ui/Theme';
 import Header from './ui/Header';
 import Footer from './ui/Footer';
+import LandingPage from './LandingPage';
 
 function App() {
   const [value, setValue] = React.useState(0);
@@ -20,10 +21,7 @@ function App() {
           setSelectedIndex={setSelectedIndex}
         />
         <Routes>
-          <Route
-            path="/"
-            element={<div style={{ height: '2000px' }}>Home</div>}
-          />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/services" element={<div>Services</div>} />
           <Route path="/customsoftware" element={<div>Custom Software</div>} />
           <Route path="/mobileapps" element={<div>Mobile Apps</div>} />
